@@ -5,8 +5,9 @@ function [J, grad] = costFunctionReg(theta, X, y, lambda)
 %   gradient of the cost w.r.t. to the parameters. 
 
 % Initialize some useful values
-%m = length(y); % number of training examples
-[m, ~] = size(X);
+%m = number of training examples
+%n = number of features
+[m, n] = size(X);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -38,13 +39,17 @@ J = sum(J) ./ m;
 %Calculate the gradient
 grad = ( (sigmoid(X*theta)-y)'*X ./m );
 
-%Create regularisation vector for gradient, applies to elements i>=2
-lambda_vector = ones(size(grad));
-lambda_vector(1) = 0;
-lambda_vector = lambda_vector .* lambda;
 
-%Apply regularisation to gradient
-grad = grad + lambda_vector;
+%Build regularisation vector for gradient: \frac{\lambda}{m}\theta_j, 
+%applies to elements 2-m, so not to apply the regularisation to the bias 
+%element
+grad_regularisation = theta';
+grad_regularisation(1) = 0;
+grad_regularisation = grad_regularisation .* (lambda./m);
+
+
+%Add regularisation vector to gradient vector
+grad = grad + grad_regularisation;
 
 % =============================================================
 
