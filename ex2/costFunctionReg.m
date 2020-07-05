@@ -22,16 +22,18 @@ J_for_y_eq_0 = (1-y) .* log( 1 - (sigmoid (X * theta) ) );
 
 %Subtract the results of the negative cases from the positive cases to
 %produce our cost vector for each case
-J = J_for_y_eq_1 - J_for_y_eq_0;
+J = J_for_y_eq_1 - J_for_y_eq_0
 
 %Create a constant for regularisation, taking lambda/m and theta as
 %the arguments
-c_regular = sum(theta.^2);
-c_regular = c_regular .* (lambda/(2.*m)); 
+cost_regularisation_constant = sum(theta(2:end, :).^2) .* (lambda/(2.*m))
+%cost_regularisation_constant = cost_regularisation_constant.^2
+%cost_regularisation_constant = sum(cost_regularisation_constant)
+%cost_regularisation_constant = cost_regularisation_constant .* (lambda/(2.*m)); 
 
 %Apply regularisation vector to our cost vector
 %BUT! Only to the 2nd and subsequent elements
-J(2:end) = J(2:end)+c_regular;
+J(2:end) = J(2:end)+cost_regularisation_constant;
 
 % sum our cost vector J,then divide by number of cases to get the mean value
 J = sum(J) ./ m;
