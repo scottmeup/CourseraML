@@ -26,12 +26,12 @@ J = J_for_y_eq_1 - J_for_y_eq_0;
 
 %Create a constant for regularisation, taking lambda/m and theta as
 %the arguments
-cost_regularisation_constant = sum(theta(2:end).^2);
-cost_regularisation_constant = cost_regularisation_constant .* (lambda/(2.*m)); 
+c_regular = sum(theta.^2);
+c_regular = c_regular .* (lambda/(2.*m)); 
 
 %Apply regularisation vector to our cost vector
 %BUT! Only to the 2nd and subsequent elements
-J(2:end) = J(2:end)+cost_regularisation_constant;
+J(2:end) = J(2:end)+c_regular;
 
 % sum our cost vector J,then divide by number of cases to get the mean value
 J = sum(J) ./ m;
