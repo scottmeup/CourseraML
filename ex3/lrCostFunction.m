@@ -12,6 +12,10 @@ m = length(y); % number of training examples
 J = 0;
 grad = zeros(size(theta));
 
+theta
+lambda
+m
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
 %               You should set J to the cost.
@@ -42,16 +46,19 @@ J_for_y_eq_0 = (1-y) .* log( 1 - (sigmoid (X * theta) ) );
 
 %Subtract the results of the negative cases from the positive cases to
 %produce our cost vector for each case
-J = J_for_y_eq_1 - J_for_y_eq_0;
+J = J_for_y_eq_1 - J_for_y_eq_0
 
 %Create a constant for regularisation, taking lambda/m and theta as
 %the arguments
-c_regular = sum(theta.^2);
-c_regular = c_regular .* (lambda/(2.*m)); 
+cost_regularisation_constant = sum(theta.^2)
+cost_regularisation_constant = cost_regularisation_constant .* (lambda/(2.*m))
 
 %Apply regularisation vector to our cost vector
 %BUT! Only to the 2nd and subsequent elements
-J(2:end) = J(2:end)+c_regular;
+cost_regularisation_vector = ones(m, 1) .* cost_regularisation_constant;
+cost_regularisation_vector(1) = 0
+J = J + cost_regularisation_vector
+%J(2:end) = J(2:end)+cost_regularisation_constant;
 
 % sum our cost vector J,then divide by number of cases to get the mean value
 J = sum(J) ./ m;
@@ -67,13 +74,13 @@ grad = ( (sigmoid(X*theta)-y)'*X ./m );
 %Build regularisation vector for gradient: \frac{\lambda}{m}\theta_j, 
 %applies to elements 2-m, so not to apply the regularisation to the bias 
 %element
-grad_regularisation = theta';
-grad_regularisation(1) = 0;
-grad_regularisation = grad_regularisation .* (lambda./m);
+gradient_regularisation = theta';
+gradient_regularisation(1) = 0;
+gradient_regularisation = gradient_regularisation .* (lambda./m);
 
 
 %Add regularisation vector to gradient vector
-grad = grad + grad_regularisation;
+grad = grad + gradient_regularisation;
 
 % =============================================================
 
