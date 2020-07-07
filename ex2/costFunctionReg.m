@@ -36,12 +36,11 @@ cost_regularisation_constant = cost_regularisation_constant .* (lambda/(2.*m));
 %}
 
 
-%Apply regularisation vector to our cost vector
-%BUT! Only to the 2nd and subsequent elements
-J(2:end) = J(2:end)+cost_regularisation_constant;
-
 % sum our cost vector J,then divide by number of cases to get the mean value
 J = sum(J) ./ m;
+
+% Apply the regularisation term
+J = J + cost_regularisation_constant;
 
 %Calculate the gradient
 grad = ( (sigmoid(X*theta)-y)'*X ./m );
