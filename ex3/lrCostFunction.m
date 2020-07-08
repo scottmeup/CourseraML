@@ -41,7 +41,7 @@ grad = ( (sigmoid(X*theta)-y)'*X ./m );
 %Build regularisation vector for gradient: \frac{\lambda}{m}\theta_j, 
 %applies to elements 2-m, so not to apply the regularisation to the bias 
 %element
-grad_regularisation = [0 theta(2:end)'] .* (lambda./m)
+grad_regularisation = [0 theta(2:end)'] .* (lambda./m);
 %More spread out version of the above:
 %{
 grad_regularisation = theta';
