@@ -33,11 +33,11 @@ X = [ones(m, 1) X];
 
 %Compute sigmoid of sample matrix X multiplied by regression matrix
 %all_theta
-s = sigmoid(X*all_theta')
+s = sigmoid(X*all_theta');
 
 %Set p to the index of the maximum values found in s, using the 2nd
 %dimension so as to return a column vector
-[Y, p] = max(s, [], 2)
+[Y, p] = max(s, [], 2);
 
 
 
