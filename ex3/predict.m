@@ -22,9 +22,23 @@ p = zeros(size(X, 1), 1);
 %
 
 
+% Add column of 1s for our bias unit for each case to create the input layer
+% a^(1)
+X = [ones(m, 1) X];
+
+% z^(2) = Theta^(1)*a^(1)
+% a^(2) = g(z^(2)) plus a column of ones for our bias unit
+hiddenLayerOne = sigmoid(X*Theta1');
+hiddenLayerOne = [ ones(size(hiddenLayerOne, 1), 1), hiddenLayerOne ];
 
 
+% z^(3) = Theta^(2)*a^(2)
+% a^(3) = g(z^(3))
+outputLayer = sigmoid(hiddenLayerOne*Theta2');
 
+% Find the indices of the maximum values for the output layer. 
+% Max run along dimension two to produce a column vector: p
+[Y p] = max(outputLayer, [], 2);
 
 
 
