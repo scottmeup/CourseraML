@@ -62,12 +62,46 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%Unpack the y matrix into a set of logical vectors
+eye_matrix = eye(num_labels);
+y_matrix = eye_matrix(y,:)
+k = size(y_matrix, 1);
+
+%Add a column for bias units of our samples in X
+a1 = [ones(m, 1) X]
+
+%Calculate z2 - the inputs for g(z)
+z2 = a1*Theta1'
+
+%
+a2 = sigmoid(z2)
 
 
 
 
 
+%cost calculation
+%{
+for i = 1:k
 
+    i
+    
+    %Compute values for the negative and the positive case of y
+    J_for_y_eq_1 = (-1.*y(i, :)) .* ( log(sigmoid (X * Theta1') ) );
+    J_for_y_eq_0 = (1-y(i, :)) .* log( 1 - (sigmoid (X * Theta1') ) );
+
+    %Subtract the results of the negative cases from the positive cases to
+    %produce our cost vector for each case
+    J_k = J_for_y_eq_1 - J_for_y_eq_0;
+
+    % sum our cost vector J,then divide by number of cases to get the mean value
+    J_k = sum(J_k) ./ m
+    
+    %Add the cost for this k to our total cost
+    J = J + J_k
+    
+end
+%}
 
 
 
