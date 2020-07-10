@@ -68,50 +68,33 @@ y_matrix = eye_matrix(y,:)
 k = size(y_matrix, 1);
 
 %Add a column for bias units of our samples in X
-a1 = [ones(m, 1) X]
+a1 = [ones(m, 1) X];
 
-%Calculate z2 - the inputs for g(z)
-z2 = a1*Theta1'
+%Calculate z2: the activations for our input layer, and the inputs for
+%g(z^(2))
+z2 = a1*Theta1';
 
-%
-a2 = sigmoid(z2)
+%Compute the activations for our hidden layer
+a2 = sigmoid(z2);
 
+%Add a column for the bias unit in our hidden layer
+a2 = [ones(m, 1) a2];
 
+%Calculate our inputs for g(z^(3))  - our output layer
+z3 = a2*Theta2';
 
+%Compute the activations for our output layer
+a3 = sigmoid(z3)
 
-
-%cost calculation
-%{
-for i = 1:k
-
-    i
-    
-    %Compute values for the negative and the positive case of y
-    J_for_y_eq_1 = (-1.*y(i, :)) .* ( log(sigmoid (X * Theta1') ) );
-    J_for_y_eq_0 = (1-y(i, :)) .* log( 1 - (sigmoid (X * Theta1') ) );
-
-    %Subtract the results of the negative cases from the positive cases to
-    %produce our cost vector for each case
-    J_k = J_for_y_eq_1 - J_for_y_eq_0;
-
-    % sum our cost vector J,then divide by number of cases to get the mean value
-    J_k = sum(J_k) ./ m
-    
-    %Add the cost for this k to our total cost
-    J = J + J_k
-    
-end
-%}
-
-
-
-
-
-
-
-
-
-
+% Calculate cost: this is done by element wise multiplication of y by the 
+% sigmoid function of our ouput activations, taking the double sum of the
+% result and dividing by m
+J_for_y_eq_1 = (-1.*y_matrix) .* log(a3);
+J_for_y_eq_0 = (1-y_matrix) .* log(1-a3);
+J = J_for_y_eq_1 - J_for_y_eq_0;
+J = sum(J);
+J = sum(J);
+J = J./ m;
 
 
 % -------------------------------------------------------------
