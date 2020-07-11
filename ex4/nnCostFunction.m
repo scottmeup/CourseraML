@@ -96,13 +96,11 @@ J = sum(J);
 J = sum(J);
 J = J./ m;
 
-
 %Calculate regularisation term: the sum of each theta value squared 
 %multiplied by lambda / (2m) . 
 %Theta_0 for our bias units are excluded from this calculation
 %
 %The specification gives that there are exactly 3 layers.
-
 regularisation_1 = Theta1(:, 2:end);
 regularisation_2 = Theta2(:, 2:end);
 regularisation_1 = regularisation_1.^2;
@@ -113,9 +111,23 @@ regularisation_2 = sum(regularisation_2);
 regularisation_2 = sum(regularisation_2);
 regularisation = (regularisation_1 + regularisation_2) .* (lambda)/(2.*m);
 
-
 %Apply regularisation term to our cost value
 J = J + regularisation;
+
+% Calculate error for output layer as the difference between output layer 
+% activation matrix: a3 and training solution: y_matrix
+delta_3 = a3-y_matrix;
+
+% Calculate error for hidden layer as the output layer error: delta_3 
+% multiplied by our weights for the hidden layer: Theta2 excluding the
+% weights for the bias unit in the first column
+% The result of the matrix multiplication above is then multiplied element-
+% wise by the sigmoid gradient of the input for layer 3: z2
+delta_2 = delta_3*(Theta2(:, 2:end));
+delta_2 = delta_2 .* sigmoidGradient(z2);
+
+    
+end
 
 % =========================================================================
 
