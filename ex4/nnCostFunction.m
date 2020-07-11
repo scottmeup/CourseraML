@@ -116,18 +116,22 @@ J = J + regularisation;
 
 % Calculate error for output layer as the difference between output layer 
 % activation matrix: a3 and training solution: y_matrix
-delta_3 = a3-y_matrix;
+d3 = a3-y_matrix;
 
-% Calculate error for hidden layer as the output layer error: delta_3 
+% Calculate error for hidden layer as the output layer error: d3 
 % multiplied by our weights for the hidden layer: Theta2 excluding the
 % weights for the bias unit in the first column
 % The result of the matrix multiplication above is then multiplied element-
 % wise by the sigmoid gradient of the input for layer 3: z2
-delta_2 = delta_3*(Theta2(:, 2:end));
-delta_2 = delta_2 .* sigmoidGradient(z2);
+d2 = d3*(Theta2(:, 2:end));
+d2 = d2 .* sigmoidGradient(z2);
 
-    
-end
+% Calculate Delta for current layer by multiplying error: d of next layer: 
+% d^(i+1) multiplied by activation: a of current layer: a^(i) working from
+% final layer l back to initial layer 1.
+Delta2 = d3'*a2;
+Delta1 = d2'*a1;
+
 
 % =========================================================================
 
