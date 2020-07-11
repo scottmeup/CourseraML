@@ -64,7 +64,7 @@ Theta2_grad = zeros(size(Theta2));
 
 %Unpack the y matrix into a set of logical vectors
 eye_matrix = eye(num_labels);
-y_matrix = eye_matrix(y,:)
+y_matrix = eye_matrix(y,:);
 k = size(y_matrix, 1);
 
 %Add a column for bias units of our samples in X
@@ -84,7 +84,7 @@ a2 = [ones(m, 1) a2];
 z3 = a2*Theta2';
 
 %Compute the activations for our output layer
-a3 = sigmoid(z3)
+a3 = sigmoid(z3);
 
 % Calculate cost: this is done by element wise multiplication of y by the 
 % sigmoid function of our ouput activations, taking the double sum of the
@@ -97,7 +97,25 @@ J = sum(J);
 J = J./ m;
 
 
-% -------------------------------------------------------------
+%Calculate regularisation term: the sum of each theta value squared 
+%multiplied by lambda / (2m) . 
+%Theta_0 for our bias units are excluded from this calculation
+%
+%The specification gives that there are exactly 3 layers.
+
+regularisation_1 = Theta1(:, 2:end);
+regularisation_2 = Theta2(:, 2:end);
+regularisation_1 = regularisation_1.^2;
+regularisation_2 = regularisation_2.^2;
+regularisation_1 = sum(regularisation_1);
+regularisation_1 = sum(regularisation_1);
+regularisation_2 = sum(regularisation_2);
+regularisation_2 = sum(regularisation_2);
+regularisation = (regularisation_1 + regularisation_2) .* (lambda)/(2.*m);
+
+
+%Apply regularisation term to our cost value
+J = J + regularisation;
 
 % =========================================================================
 
