@@ -132,6 +132,9 @@ d2 = d2 .* sigmoidGradient(z2);
 Delta2 = d3'*a2;
 Delta1 = d2'*a1;
 
+% Calculate the gradients by taking each Delta and scaling it by 1/m
+Theta2_grad = Delta2 ./ m;
+Theta1_grad = Delta1 ./ m;
 
 % =========================================================================
 
