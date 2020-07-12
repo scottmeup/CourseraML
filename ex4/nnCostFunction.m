@@ -136,6 +136,20 @@ Delta1 = d2'*a1;
 Theta2_grad = Delta2 ./ m;
 Theta1_grad = Delta1 ./ m;
 
+% Create regularisation terms: 
+% Multiply each Theta by lambda/m. 
+% Do not regularise bias units, so set column 1 to = 0 of our
+% regularisation term
+Theta2_regularisation = Theta2 .* (lambda/m);
+Theta2_regularisation(:, 1) = 0;
+Theta1_regularisation = Theta1 .* (lambda/m);
+Theta1_regularisation(:, 1) = 0;
+
+% Apply regularisation terms to gradients
+Theta2_grad = Theta2_grad+Theta2_regularisation;
+Theta1_grad = Theta1_grad+Theta1_regularisation;
+
+
 % =========================================================================
 
 % Unroll gradients
