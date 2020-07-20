@@ -32,16 +32,20 @@ theta
 %Calculate cost
 J = (1/(2*m)).* sum( ( (X * theta) - y) .^2 );
 
-%Calculate & apply regularization for cost
+%Calculate & apply regularisation for cost
 if lambda>0
     costReg = (lambda/(2*m)) .* sum(theta(2:end).^2);
     J = J + costReg;
 end
 
+%Calculate gradients
+grad = (1/m) .* (((X * theta) -y )' * X)';
 
+%Calculate regularisation for gradients for j>=1 / elements 2:end
+gradReg = [ 0; ( (lambda ./ m) .* theta(2:end) ) ];
 
-
-
+%Apply regularisation to gradients
+grad = grad + gradReg;
 
 % =========================================================================
 
