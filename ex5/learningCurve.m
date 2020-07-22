@@ -64,7 +64,7 @@ for i=1:m
     
     
     %First i element selection each iteration
-    this_X = X(1:i, :)
+    this_X = X(1:i, :);
     this_y = y(1:i);
 
     
