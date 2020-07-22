@@ -51,15 +51,29 @@ error_val   = zeros(m, 1);
 %       end
 %
 
-% ---------------------- Sample Solution ----------------------
+for i=1:m
+    %{
+    %randomise selection each iteration
+    randomSelection = randperm(m)
+    randomSelectionX = X(randomSelection(1:i), :)
+    randomSelectionY = y(randomSelection(1:i))
+    this_X = randomSelectionX
+    this_y = randomSelectionY
+    %}
+    
+    %First i element selection each iteration
+    this_X = X(1:i, :)
+    this_y = y(1:i)
+    theta = trainLinearReg(this_X, this_y, lambda)
+    J_train = (1./(2.*i)).*(((this_X*theta)-this_y).^2)
+    J_train = sum(J_train)
+    error_train(i) = J_train;
+end
 
 
 
 
 
-
-
-% -------------------------------------------------------------
 
 % =========================================================================
 
