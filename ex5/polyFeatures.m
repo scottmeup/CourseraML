@@ -15,10 +15,12 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
-
-
-
-
+%Loop over our powers 1:p 
+for i=1:p
+    %Element-wise raise X_poly to the power of i and add each result to the 
+    %return value as a column
+    X_poly(:, i) = (X .^ i);
+end
 
 % =========================================================================
 
