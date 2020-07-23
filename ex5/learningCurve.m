@@ -51,34 +51,33 @@ error_val   = zeros(m, 1);
 %       end
 %
 
+randomSelection = false;
 for i=1:m
-    i
-    %{
-    %randomise selection each iteration
-    randomSelection = randperm(m)
-    randomSelectionX = X(randomSelection(1:i), :)
-    randomSelectionY = y(randomSelection(1:i))
-    this_X = randomSelectionX
-    this_y = randomSelectionY
-    %}
     
-    
-    %First i element selection each iteration
-    this_X = X(1:i, :);
-    this_y = y(1:i);
+    if(randomSelection)
+        %randomise selection each iteration
+        randomSelection = randperm(m);
+        randomSelectionX = X(randomSelection(1:i), :);
+        randomSelectionY = y(randomSelection(1:i));
+        this_X = randomSelectionX;
+        this_y = randomSelectionY;
+    else
+        %First i element selection each iteration
+        this_X = X(1:i, :);
+        this_y = y(1:i);
+    end
 
     
     %Calculate theta, training set cost, validation set cost
     theta = trainLinearReg(this_X, this_y, lambda);
     J_train = linearRegCostFunction(this_X, this_y, theta, 0);
-    J_val = linearRegCostFunction(X, y, theta, 0);
+    J_val = linearRegCostFunction(Xval, yval, theta, 0);
     
     %Store the errors for this iteration as elements in a vector
     error_train(i) = J_train;
     error_val(i) = J_val; 
+    
 end
-
-
 
 % =========================================================================
 
