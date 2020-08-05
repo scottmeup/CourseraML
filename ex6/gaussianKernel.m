@@ -13,7 +13,8 @@ x1 = x1(:); x2 = x2(:);
 %
 %
 
-%Gaussian Kernal:
+%Gaussian Kernel:
+%K_{gaussian}\left( x^{\left( i\right) },x^{\left( j\right) }\right) =e^\left( -\sum ^{n}_{k=1}\dfrac{\left( x_{k}^{\left( i\right) }-x_{k}^{\left( j\right) }\right) ^{2}}{2\sigma ^{2}}\right)
 sim = exp( sum( (x1-x2).^2 ) .* (-1/(2*(sigma).^2)) );
 
 
