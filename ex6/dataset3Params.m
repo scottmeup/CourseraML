@@ -22,17 +22,17 @@ function [C, sigma] = dataset3Params(X, y, Xval, yval)
 %list of values to use for C and sigma when trying to find the lowest error
 valueList = [0.01 0.03 0.1 0.3 1 3 10 30];
 
-%initialise variables to hold the value of our lowesr cost, the C, and 
-%Sigma used to achieve that cost
+%initialise variables to hold the value of the lowest cost, the C, and 
+%the Sigma used to achieve that cost
 minCost = inf;
 C = 1;
 sigma = 1;
 
 %iterate over valueList to generate combinations of C and Sigma for
 %modelling & cost comparison
-[~, valueListDimension] = size(valueList);
-for thisC = 1:valueListDimension
-    for thisSigma = 1:valueListDimension
+[~, valueListSize] = size(valueList);
+for thisC = 1:valueListSize
+    for thisSigma = 1:valueListSize
         %generate cost for this particular combination of C and Sigma
         thisModel = svmTrain(X, y, valueList(thisC), @(x1, x2) gaussianKernel(x1, x2, valueList(thisSigma)));
         thisPrediction = svmPredict(thisModel, Xval);
