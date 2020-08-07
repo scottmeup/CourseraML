@@ -98,8 +98,15 @@ while ~isempty(email_contents)
     %
 
 
-
-
+    %return the index of any strings that match an element in our vocab
+    %list
+    foundWordIndex = find(strcmp(vocabList, str));
+    
+    if foundWordIndex
+        %Append the index of found word to the word_indices list
+        [~, word_indicesSize] = size(word_indices);
+        word_indices(word_indicesSize+1) = foundWordIndex;
+    end
 
 
 
